@@ -30,7 +30,8 @@ module Monban
       end
 
       def add_model
-        generate 'model', 'user email password_digest'
+        generate 'model', 'user email:uniq password_digest'
+        inject_into_class "app/models/user.rb", User, "  validates :email, presence: true, uniqueness: true\n"
       end
 
       def display_readme
